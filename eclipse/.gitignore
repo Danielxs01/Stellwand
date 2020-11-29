@@ -1,2 +1,7 @@
 /crash-reports/
 /logs/
+/config/
+/mods/
+/resourcepacks/
+/options.txt
+/usernamecache.json
