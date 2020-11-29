@@ -1,0 +1,20 @@
+# Creative Tabs
+itemGroup.stellwandtab=Stellwand
+
+# Blocks
+
+tile.blockFiller.name=Filler
+tile.blockSender.name=Sender
+
+tile.blockTrackEmpty.name=Empty Track
+tile.blockTrackEmptyColored.name=Track
+
+tile.blockTrackDiagUR.name=Diag Track (Up, Right)
+tile.blockTrackDiagUL.name=Diag Track (Up, Left)
+tile.blockTrackDiagDR.name=Diag Track (Down, Right)
+tile.blockTrackDiagDL.name=Diag Track (Down, Left)
+
+tile.blockTrackSwitchLRD.name=Switch Track (Left => Right, Down)
+tile.blockTrackSwitchLRU.name=Switch Track (Left => Right, Up)
+tile.blockTrackSwitchRLD.name=Switch Track (Right => Left, Down)
+tile.blockTrackSwitchRLU.name=Switch Track (Right => Left, Up)

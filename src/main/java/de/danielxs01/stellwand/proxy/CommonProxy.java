@@ -5,6 +5,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.Stellwand;
+import de.danielxs01.stellwand.content.blocks.CustomBlocks;
+import de.danielxs01.stellwand.content.items.CustomItems;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class CommonProxy {
@@ -12,11 +14,11 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		Stellwand.logger.info("preInit");
 
-//		CustomItems.init();
-//		CustomItems.register();
-//		CustomBlocks.init();
-//		CustomBlocks.register();
-//
+		CustomItems.init();
+		CustomItems.register();
+		CustomBlocks.init();
+		CustomBlocks.register();
+
 //		NetworkRegistry.INSTANCE.registerGuiHandler(LandOfRails.instance, new GuiHandler());
 //
 //		GameRegistry.registerTileEntity(TEBlockSignal.class, Constants.MODID + "_BlockSignal");
