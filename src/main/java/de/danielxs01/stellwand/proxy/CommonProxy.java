@@ -13,6 +13,7 @@ import de.danielxs01.stellwand.content.gui.GuiHandler;
 import de.danielxs01.stellwand.content.items.CustomItems;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
+import de.danielxs01.stellwand.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class CommonProxy {
@@ -30,7 +31,7 @@ public class CommonProxy {
 		GameRegistry.registerTileEntity(TEBlockSignal.class, Constants.MODID + "_BlockSignal");
 		GameRegistry.registerTileEntity(TEBlockSender.class, Constants.MODID + "_BlockSender");
 
-//		PacketDispatcher.registerPackets();
+		PacketDispatcher.registerPackets();
 	}
 
 	public void init(FMLInitializationEvent event) {
