@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 
-public class GuiBlockTrackSignal extends GuiScreen {
+public class GuiBlockSignal extends GuiScreen {
 
 	// Gui ID
 	public static final int GUIID = 2;
@@ -24,11 +24,11 @@ public class GuiBlockTrackSignal extends GuiScreen {
 	private BlockPos blockPos;
 	private int frequency;
 
-	public GuiBlockTrackSignal() {
+	public GuiBlockSignal() {
 
 	}
 
-	public GuiBlockTrackSignal(EntityPlayer player, BlockPos blockPos) {
+	public GuiBlockSignal(EntityPlayer player, BlockPos blockPos) {
 		this.player = player;
 		this.blockPos = blockPos;
 

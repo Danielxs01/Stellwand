@@ -1,14 +1,17 @@
-package de.danielxs01.stellwand.proxy;
+package de.danielxs01.stellwand.proxy.client;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.Stellwand;
+import de.danielxs01.stellwand.proxy.server.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class ClientProxy extends CommonProxy {
+
+	public static ClientSignalHandler signalHandler = new ClientSignalHandler();
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {

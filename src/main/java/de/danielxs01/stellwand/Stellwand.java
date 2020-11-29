@@ -9,7 +9,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import de.danielxs01.stellwand.proxy.CommonProxy;
+import de.danielxs01.stellwand.proxy.server.CommonProxy;
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, canBeDeactivated = false, useMetadata = true)
 public class Stellwand {

@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.proxy;
+package de.danielxs01.stellwand.proxy.server;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -17,6 +17,8 @@ import de.danielxs01.stellwand.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class CommonProxy {
+
+	public static ServerSignalHandler signalHandler = new ServerSignalHandler();
 
 	public void preInit(FMLPreInitializationEvent event) {
 		Stellwand.logger.info("preInit");

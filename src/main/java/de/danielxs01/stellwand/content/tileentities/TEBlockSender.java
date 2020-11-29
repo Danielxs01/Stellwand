@@ -2,6 +2,8 @@ package de.danielxs01.stellwand.content.tileentities;
 
 import java.util.UUID;
 
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.server.RequestTEStorage;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,8 +11,9 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TEBlockSender extends TileEntity {
 
-	protected static final int TARGETTICK = 20;
-	protected int currentTick = 0;
+	private static final int TARGETTICK = 20;
+	private int currentTick = 0;
+	private boolean initialTick = true;
 
 	private UUID senderID = UUID.randomUUID();
 	private int frequency;
@@ -78,6 +81,11 @@ public class TEBlockSender extends TileEntity {
 
 	@Override
 	public void updateEntity() {
+
+		if (initialTick) {
+			initialTick = false;
+			PacketDispatcher.sendToServer(new RequestTEStorage(new BlockPos(xCoord, yCoord, zCoord)));
+		}
 
 		currentTick++;
 		if (currentTick >= TARGETTICK) {

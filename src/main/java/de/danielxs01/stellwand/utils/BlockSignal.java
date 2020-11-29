@@ -2,9 +2,13 @@ package de.danielxs01.stellwand.utils;
 
 import java.util.ArrayList;
 
+import de.danielxs01.stellwand.content.gui.GuiBlockSignal;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.client.OpenGUI;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -35,17 +39,28 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 		return null;
 	}
 
+	// Called on: Client & Server
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
 
-		// Called: Client, Server; Side: Client
-		if (world.isRemote) {
-			// Request Gui for TileEntity Data
+		if (!world.isRemote) {
 
-			// TODO: Refresh data and request gui
+			// TODO: Check GUI
+
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TEBlockSignal) {
+				TEBlockSignal blockSignal = (TEBlockSignal) te;
+
+				int guiId = GuiBlockSignal.GUIID;
+				BlockPos pos = new BlockPos(x, y, z);
+				int frequency = blockSignal.getFrequency();
+				EStellwandSignal signal = blockSignal.getSignal();
+
+				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, signal), (EntityPlayerMP) player);
+			}
+
 		}
-
 		return true;
 
 	}

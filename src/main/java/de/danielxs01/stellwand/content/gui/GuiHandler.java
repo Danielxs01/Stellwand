@@ -14,8 +14,8 @@ public class GuiHandler implements IGuiHandler {
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if (id == GuiBlockTrackSignal.GUIID) {
-			return new GuiBlockTrackSignal(player, new BlockPos(x, y, z));
+		if (id == GuiBlockSignal.GUIID) {
+			return new GuiBlockSignal(player, new BlockPos(x, y, z));
 		} else if (id == GuiBlockSender.GUIID) {
 			return new GuiBlockSender(player, new BlockPos(x, y, z));
 		}

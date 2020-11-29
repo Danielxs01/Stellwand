@@ -1,11 +1,17 @@
 package de.danielxs01.stellwand.content.blocks.others;
 
 import de.danielxs01.stellwand.Constants;
+import de.danielxs01.stellwand.content.gui.GuiBlockSender;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.client.OpenGUI;
+import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.BlockTileEntity;
+import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.Explosion;
@@ -44,16 +50,27 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 
 	// Methods
 
+	// Called on: Client & Server
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
 
-		// Called: Client, Server
-		// Side: Client
-		if (world.isRemote) {
-			// Request Gui for TileEntity Data
+		if (!world.isRemote) {
 
-			// TODO: Request GUI and refresh Data
+			// TODO: Check GUI
+
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TEBlockSender) {
+				TEBlockSender blockSender = (TEBlockSender) te;
+
+				int guiId = GuiBlockSender.GUIID;
+				BlockPos pos = new BlockPos(x, y, z);
+				int frequency = blockSender.getFrequency();
+				EStellwandSignal signal = blockSender.getSignal();
+
+				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, signal), (EntityPlayerMP) player);
+			}
+
 		}
 
 		return true;
