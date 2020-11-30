@@ -26,8 +26,10 @@ public class ResponseTEStorageChange implements IMessage {
 	}
 
 	public ResponseTEStorageChange(BlockPos pos, int frequency, @Nullable EStellwandSignal signal) {
+		this.pos = pos;
 		this.type = signal == null ? 1 : 2;
 		this.frequency = frequency;
+		this.signal = signal;
 	}
 
 	@Override

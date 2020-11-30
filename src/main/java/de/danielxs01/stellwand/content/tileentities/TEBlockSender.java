@@ -3,6 +3,7 @@ package de.danielxs01.stellwand.content.tileentities;
 import java.util.UUID;
 
 import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.server.RequestSignalChange;
 import de.danielxs01.stellwand.network.server.RequestTEStorage;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
@@ -82,9 +83,12 @@ public class TEBlockSender extends TileEntity {
 	@Override
 	public void updateEntity() {
 
+		if (!worldObj.isRemote)
+			return;
+
 		if (initialTick) {
 			initialTick = false;
-			PacketDispatcher.sendToServer(new RequestTEStorage(new BlockPos(xCoord, yCoord, zCoord)));
+			PacketDispatcher.sendToServer(new RequestTEStorage(getBlockPos()));
 		}
 
 		currentTick++;
@@ -97,6 +101,8 @@ public class TEBlockSender extends TileEntity {
 				isPowered = currentlyPowered;
 
 				// TODO: Change Signal and do some Packet-stuff
+				EStellwandSignal s = isPowered ? signal : EStellwandSignal.OFF;
+				PacketDispatcher.sendToServer(new RequestSignalChange(senderID, frequency, s));
 
 			}
 

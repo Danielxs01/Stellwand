@@ -18,9 +18,11 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class CommonProxy {
 
+	// TODO: Use signal handlers
 	public static ServerSignalHandler signalHandler = new ServerSignalHandler();
 
 	public void preInit(FMLPreInitializationEvent event) {
+
 		Stellwand.logger.info("preInit");
 
 		CustomItems.init();

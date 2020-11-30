@@ -3,6 +3,8 @@ package de.danielxs01.stellwand.content.gui;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.client.gui.GuiButton;
@@ -110,8 +112,10 @@ public class GuiBlockSender extends GuiScreen {
 
 		if (button.id == saveButton.id) {
 			if (isInt(frequencyText.getText())) {
+				frequency = Integer.parseInt(frequencyText.getText());
+				signal = EStellwandSignal.valueOf(signalButton.displayString);
 
-				// TODO: Change data for sender
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, signal));
 
 				this.player.closeScreen();
 			}

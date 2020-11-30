@@ -1,5 +1,8 @@
 package de.danielxs01.stellwand.content.tileentities;
 
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.server.RequestTEStorage;
+import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.nbt.NBTTagCompound;
@@ -83,6 +86,7 @@ public class TEBlockSignal extends TileEntity {
 		if (!initialRender) {
 
 			// TODO: Get data from server if this is client
+			PacketDispatcher.sendToServer(new RequestTEStorage(this.getBlockPos()));
 
 			initialRender = true;
 		}
@@ -92,7 +96,7 @@ public class TEBlockSignal extends TileEntity {
 			currentTick = 0;
 
 			// TODO: Get current signal of frequency
-			EStellwandSignal s = null; // ClientProxy.signalHandler.getSignal(frequency);
+			EStellwandSignal s = ClientProxy.signalHandler.getSignal(frequency);
 
 			if (s != this.signal) {
 				this.setSignal(s);

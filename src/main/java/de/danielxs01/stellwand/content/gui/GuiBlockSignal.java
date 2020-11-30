@@ -2,7 +2,10 @@ package de.danielxs01.stellwand.content.gui;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import de.danielxs01.stellwand.Stellwand;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
 import de.danielxs01.stellwand.utils.BlockPos;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -96,8 +99,12 @@ public class GuiBlockSignal extends GuiScreen {
 	@Override
 	public void actionPerformed(GuiButton button) {
 		if (isInt(text.getText())) {
+			frequency = Integer.parseInt(text.getText());
+
+			Stellwand.logger.info("GuiBlockSignal | Frequency: {}", frequency);
 
 			// TODO: Update data for signal
+			PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, null));
 
 			this.player.closeScreen();
 		}

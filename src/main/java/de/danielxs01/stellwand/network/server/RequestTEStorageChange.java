@@ -26,7 +26,9 @@ public class RequestTEStorageChange implements IMessage {
 
 	public RequestTEStorageChange(BlockPos pos, int frequency, @Nullable EStellwandSignal signal) {
 		this.type = signal == null ? 1 : 2;
+		this.pos = pos;
 		this.frequency = frequency;
+		this.signal = signal;
 	}
 
 	@Override

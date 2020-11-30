@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class ClientProxy extends CommonProxy {
 
+	// TODO: Use it
 	public static ClientSignalHandler signalHandler = new ClientSignalHandler();
 
 	@Override
