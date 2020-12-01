@@ -6,13 +6,16 @@ import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TEBlockSignal extends TileEntity {
 
 	protected static final int TARGETTICK = 10;
 	protected int currentTick = 0;
-	private boolean initialRender = false;
+	private boolean initialTick = true;
 
 	private int frequency;
 	private EStellwandSignal signal;
@@ -83,12 +86,9 @@ public class TEBlockSignal extends TileEntity {
 		if (!worldObj.isRemote)
 			return;
 
-		if (!initialRender) {
-
-			// TODO: Get data from server if this is client
-			PacketDispatcher.sendToServer(new RequestTEStorage(this.getBlockPos()));
-
-			initialRender = true;
+		if (this.initialTick) {
+			this.initialTick = false;
+			PacketDispatcher.sendToServer(new RequestTEStorage(getBlockPos()));
 		}
 
 		currentTick++;
@@ -102,6 +102,19 @@ public class TEBlockSignal extends TileEntity {
 				this.setSignal(s);
 			}
 		}
+	}
+
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound tag = new NBTTagCompound();
+		this.writeToNBT(tag);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+		super.onDataPacket(net, packet);
+		readFromNBT(packet.func_148857_g());
 	}
 
 }

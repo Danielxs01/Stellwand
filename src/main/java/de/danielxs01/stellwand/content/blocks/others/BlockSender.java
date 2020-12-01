@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -54,6 +55,20 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
+
+		if (player.isSneaking()) {
+
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TEBlockSender) {
+				TEBlockSender blockSender = (TEBlockSender) te;
+				int frequency = blockSender.getFrequency();
+				EStellwandSignal signal = blockSender.getSignal();
+				String msg = "Frequency: " + frequency + "; Signal: " + signal.name() + "; Client: " + world.isRemote;
+				player.addChatMessage(new ChatComponentText(msg));
+			}
+
+			return true;
+		}
 
 		if (!world.isRemote) {
 

@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -43,6 +44,20 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
+
+		if (player.isSneaking()) {
+
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TEBlockSignal) {
+				TEBlockSignal blockSignal = (TEBlockSignal) te;
+				int frequency = blockSignal.getFrequency();
+				EStellwandSignal signal = blockSignal.getSignal();
+				String msg = "Frequency: " + frequency + "; Signal: " + signal.name() + "; Client: " + world.isRemote;
+				player.addChatMessage(new ChatComponentText(msg));
+			}
+
+			return true;
+		}
 
 		if (!world.isRemote) {
 

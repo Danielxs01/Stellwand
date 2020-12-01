@@ -8,6 +8,8 @@ import de.danielxs01.stellwand.network.server.RequestTEStorage;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TEBlockSender extends TileEntity {
@@ -111,6 +113,13 @@ public class TEBlockSender extends TileEntity {
 
 	public UUID getSenderID() {
 		return senderID;
+	}
+
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound tag = new NBTTagCompound();
+		this.writeToNBT(tag);
+		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
 	}
 
 }

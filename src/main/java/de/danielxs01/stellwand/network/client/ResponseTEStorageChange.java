@@ -6,7 +6,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
-import de.danielxs01.stellwand.network.server.AbstractServerMessageHandler;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import io.netty.buffer.ByteBuf;
@@ -50,14 +49,15 @@ public class ResponseTEStorageChange implements IMessage {
 			buf.writeInt(signal.getID());
 	}
 
-	public static class Handler extends AbstractServerMessageHandler<ResponseTEStorageChange> {
+	public static class Handler extends AbstractClientMessageHandler<ResponseTEStorageChange> {
 
 		@Override
-		public IMessage handleServerMessage(EntityPlayer player, ResponseTEStorageChange message, MessageContext ctx) {
+		public IMessage handleClientMessage(EntityPlayer player, ResponseTEStorageChange message, MessageContext ctx) {
 
 			BlockPos pos = message.pos;
 			TileEntity te = player.worldObj.getTileEntity(pos.getX(), pos.getY(), pos.getZ());
 			if (te instanceof TEBlockSender) {
+
 				TEBlockSender blockSender = (TEBlockSender) te;
 				blockSender.setFrequency(message.frequency);
 				if (message.type == 2)
