@@ -6,3 +6,13 @@
 /saves/
 /options.txt
 /usernamecache.json
+eclipse/banned-ips.json
+eclipse/banned-players.json
+eclipse/eula.txt
+eclipse/ops.json
+eclipse/screenshots/
+eclipse/server.properties
+eclipse/servers.dat
+eclipse/usercache.json
+eclipse/whitelist.json
+eclipse/world/

@@ -18,19 +18,21 @@ public class TEBlockSender extends TileEntity {
 	private int currentTick = 0;
 	private boolean initialTick = true;
 
-	private UUID senderID = UUID.randomUUID();
+	private UUID senderID;
 	private int frequency;
 	private EStellwandSignal signal;
 	private boolean isPowered = false;
 
 	public TEBlockSender() {
+		this.senderID = UUID.randomUUID();
 		this.frequency = 0;
 		this.signal = EStellwandSignal.OFF;
 	}
 
-	public TEBlockSender(int frequency, EStellwandSignal signal) {
+	public TEBlockSender(int frequency, EStellwandSignal signal, UUID senderID) {
 		this.frequency = frequency;
 		this.signal = signal;
+		this.senderID = senderID;
 	}
 
 	@Override
@@ -38,6 +40,8 @@ public class TEBlockSender extends TileEntity {
 
 		compound.setInteger("frequency", frequency);
 		compound.setInteger("signalID", signal.getID());
+		compound.setLong("senderIDmsb", senderID.getMostSignificantBits());
+		compound.setLong("senderIDlsb", senderID.getLeastSignificantBits());
 
 		super.writeToNBT(compound);
 	}
@@ -47,6 +51,9 @@ public class TEBlockSender extends TileEntity {
 
 		this.frequency = compound.getInteger("frequency");
 		this.signal = EStellwandSignal.fromID(compound.getInteger("signalID"));
+		long msb = compound.getLong("senderIDmsb");
+		long lsb = compound.getLong("senderIDlsb");
+		this.senderID = new UUID(msb, lsb);
 
 		super.readFromNBT(compound);
 	}

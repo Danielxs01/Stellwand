@@ -6,15 +6,16 @@ itemGroup.stellwandtab=Stellwand
 tile.blockFiller.name=Filler
 tile.blockSender.name=Sender
 
-tile.blockTrackEmpty.name=Empty Track
-tile.blockTrackEmptyColored.name=Track
+tile.blockTrackEmpty.name=Straight empty track
+tile.blockTrackEmptyColored.name=Straight track
+tile.blockTrackEmptyUnisolated.name=Straight unisolated track
 
-tile.blockTrackDiagUR.name=Diag Track (Up, Right)
-tile.blockTrackDiagUL.name=Diag Track (Up, Left)
-tile.blockTrackDiagDR.name=Diag Track (Down, Right)
-tile.blockTrackDiagDL.name=Diag Track (Down, Left)
+tile.blockTrackDiagUR.name=Diag track (Up, Right)
+tile.blockTrackDiagUL.name=Diag track (Up, Left)
+tile.blockTrackDiagDR.name=Diag track (Down, Right)
+tile.blockTrackDiagDL.name=Diag track (Down, Left)
 
-tile.blockTrackSwitchLRD.name=Switch Track (Left => Right, Down)
-tile.blockTrackSwitchLRU.name=Switch Track (Left => Right, Up)
-tile.blockTrackSwitchRLD.name=Switch Track (Right => Left, Down)
-tile.blockTrackSwitchRLU.name=Switch Track (Right => Left, Up)
+tile.blockTrackSwitchLRD.name=Switch track (Left => Right, Down)
+tile.blockTrackSwitchLRU.name=Switch track (Left => Right, Up)
+tile.blockTrackSwitchRLD.name=Switch track (Right => Left, Down)
+tile.blockTrackSwitchRLU.name=Switch track (Right => Left, Up)

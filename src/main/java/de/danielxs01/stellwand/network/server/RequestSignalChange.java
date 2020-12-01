@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import de.danielxs01.stellwand.Stellwand;
 import de.danielxs01.stellwand.network.PacketDispatcher;
 import de.danielxs01.stellwand.network.client.ResponseSignalChange;
 import de.danielxs01.stellwand.proxy.server.CommonProxy;
@@ -49,11 +48,7 @@ public class RequestSignalChange implements IMessage {
 		@Override
 		public IMessage handleServerMessage(EntityPlayer player, RequestSignalChange message, MessageContext ctx) {
 
-			// TODO: Save this on server
 			CommonProxy.signalHandler.change(message.senderID, message.frequency, message.signal);
-
-			Stellwand.logger.info("RequestSignalChange | Frequency: {}, Signal: {}", message.frequency,
-					message.signal.name());
 
 			for (Object o : player.worldObj.playerEntities) {
 				EntityPlayerMP playerMP = (EntityPlayerMP) o;
