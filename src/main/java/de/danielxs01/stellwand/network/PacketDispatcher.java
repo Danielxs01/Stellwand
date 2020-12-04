@@ -7,11 +7,8 @@ import cpw.mods.fml.relauncher.Side;
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.network.client.AbstractClientMessageHandler;
 import de.danielxs01.stellwand.network.client.OpenGUI;
-import de.danielxs01.stellwand.network.client.ResponseSignalChange;
 import de.danielxs01.stellwand.network.client.ResponseTEStorageChange;
 import de.danielxs01.stellwand.network.server.RequestGUI;
-import de.danielxs01.stellwand.network.server.RequestSignalChange;
-import de.danielxs01.stellwand.network.server.RequestSignals;
 import de.danielxs01.stellwand.network.server.RequestTEStorage;
 import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,13 +29,10 @@ public class PacketDispatcher {
 		registerMessage(RequestGUI.Handler.class, RequestGUI.class, Side.SERVER);
 		registerMessage(RequestTEStorage.Handler.class, RequestTEStorage.class);
 		registerMessage(RequestTEStorageChange.Handler.class, RequestTEStorageChange.class);
-		registerMessage(RequestSignalChange.Handler.class, RequestSignalChange.class);
-		registerMessage(RequestSignals.Handler.class, RequestSignals.class);
 
 		// Client
 		registerMessage(OpenGUI.Handler.class, OpenGUI.class, Side.CLIENT);
 		registerMessage(ResponseTEStorageChange.Handler.class, ResponseTEStorageChange.class);
-		registerMessage(ResponseSignalChange.Handler.class, ResponseSignalChange.class);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

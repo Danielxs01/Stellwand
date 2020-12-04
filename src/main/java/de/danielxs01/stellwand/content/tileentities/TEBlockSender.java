@@ -3,8 +3,8 @@ package de.danielxs01.stellwand.content.tileentities;
 import java.util.UUID;
 
 import de.danielxs01.stellwand.network.PacketDispatcher;
-import de.danielxs01.stellwand.network.server.RequestSignalChange;
 import de.danielxs01.stellwand.network.server.RequestTEStorage;
+import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,10 +14,13 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TEBlockSender extends TileEntity {
 
+	// Client data
 	private static final int TARGETTICK = 20;
 	private int currentTick = 0;
 	private boolean initialTick = true;
+	private boolean initialUpdate = true;
 
+	// General data
 	private UUID senderID;
 	private int frequency;
 	private EStellwandSignal signal;
@@ -95,6 +98,7 @@ public class TEBlockSender extends TileEntity {
 		if (!worldObj.isRemote)
 			return;
 
+		// Client
 		if (initialTick) {
 			initialTick = false;
 			PacketDispatcher.sendToServer(new RequestTEStorage(getBlockPos()));
@@ -108,14 +112,21 @@ public class TEBlockSender extends TileEntity {
 
 			if (currentlyPowered != isPowered) {
 				isPowered = currentlyPowered;
-
-				// TODO: Change Signal and do some Packet-stuff
-				EStellwandSignal s = isPowered ? signal : EStellwandSignal.OFF;
-				PacketDispatcher.sendToServer(new RequestSignalChange(senderID, frequency, s));
-
+				update();
 			}
 
 		}
+
+	}
+
+	public void update() {
+		initialUpdate = false;
+		EStellwandSignal s = isPowered ? signal : EStellwandSignal.OFF;
+		ClientProxy.signalHandler.change(senderID, frequency, s);
+	}
+
+	public boolean isInitialUpdate() {
+		return initialUpdate;
 	}
 
 	public UUID getSenderID() {

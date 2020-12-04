@@ -62,6 +62,8 @@ public class ResponseTEStorageChange implements IMessage {
 				blockSender.setFrequency(message.frequency);
 				if (message.type == 2)
 					blockSender.setSignal(message.signal);
+				if (blockSender.isInitialUpdate())
+					blockSender.update();
 			} else if (te instanceof TEBlockSignal) {
 				TEBlockSignal blockSignal = (TEBlockSignal) te;
 				blockSignal.setFrequency(message.frequency);

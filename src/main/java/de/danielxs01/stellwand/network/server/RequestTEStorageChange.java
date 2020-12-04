@@ -6,10 +6,13 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.client.ResponseTEStorageChange;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 
 public class RequestTEStorageChange implements IMessage {
@@ -66,6 +69,11 @@ public class RequestTEStorageChange implements IMessage {
 				blockSignal.setFrequency(message.frequency);
 				if (message.type == 2)
 					blockSignal.setSignal(message.signal);
+			}
+
+			for (Object o : player.worldObj.playerEntities) {
+				EntityPlayerMP p = (EntityPlayerMP) o;
+				PacketDispatcher.sendTo(new ResponseTEStorageChange(pos, message.frequency, message.signal), p);
 			}
 
 			return null;

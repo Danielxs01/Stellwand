@@ -2,8 +2,6 @@ package de.danielxs01.stellwand.proxy;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.danielxs01.stellwand.Stellwand;
-import de.danielxs01.stellwand.network.PacketDispatcher;
-import de.danielxs01.stellwand.network.server.RequestSignals;
 import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -15,7 +13,6 @@ public class StellwandEventHandler {
 		if ((event.entity instanceof EntityPlayer) && event.world.isRemote) {
 			Stellwand.logger.info("EntityJoinWorldEvent");
 			ClientProxy.signalHandler.clear();
-			PacketDispatcher.sendToServer(new RequestSignals());
 		}
 	}
 

@@ -95,13 +95,13 @@ public class TEBlockSignal extends TileEntity {
 		if (currentTick >= TARGETTICK) {
 			currentTick = 0;
 
-			// TODO: Get current signal of frequency
-			EStellwandSignal s = ClientProxy.signalHandler.getSignal(frequency);
+			EStellwandSignal s = ClientProxy.signalHandler.getHighestPrio(frequency);
 
 			if (s != this.signal) {
 				this.setSignal(s);
 			}
 		}
+
 	}
 
 	@Override
