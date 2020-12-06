@@ -1,6 +1,9 @@
 # Creative Tabs
 itemGroup.stellwandtab=Stellwand
 
+#Items
+item.itemTool.name=Workers tool
+
 # Blocks
 
 tile.blockFiller.name=Filler
@@ -19,3 +22,6 @@ tile.blockTrackSwitchLRD.name=Switch track (Left => Right, Down)
 tile.blockTrackSwitchLRU.name=Switch track (Left => Right, Up)
 tile.blockTrackSwitchRLD.name=Switch track (Right => Left, Down)
 tile.blockTrackSwitchRLU.name=Switch track (Right => Left, Up)
+
+tile.blockTrackMainSignalLeft.name=Main Signal Track (Left)
+tile.blockTrackMainSignalRight.name=Main Signal Track (Right)

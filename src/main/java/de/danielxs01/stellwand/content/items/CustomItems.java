@@ -19,6 +19,7 @@ public class CustomItems {
 
 	public static void init() {
 		items.put("SmallLogo", new SmallLogo());
+		items.put("itemTool", new ItemTool());
 
 		for (Entry<String, Item> entry : items.entrySet())
 			setName(entry.getValue(), entry.getKey());

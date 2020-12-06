@@ -3,13 +3,16 @@ package de.danielxs01.stellwand.utils;
 import java.util.ArrayList;
 
 import de.danielxs01.stellwand.content.gui.GuiBlockSignal;
+import de.danielxs01.stellwand.content.items.ItemTool;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
 import de.danielxs01.stellwand.network.PacketDispatcher;
 import de.danielxs01.stellwand.network.client.OpenGUI;
+import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.IBlockAccess;
@@ -45,7 +48,26 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
 
-		if (player.isSneaking()) {
+		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemTool) {
+
+			if (world.isRemote) {
+
+				NBTTagCompound nbt = ItemTool.getNBT(player.getCurrentEquippedItem());
+
+				int frequency = nbt.getInteger("frequency");
+				String signalName = nbt.getString("signal");
+				EStellwandSignal signal = EStellwandSignal.valueOf(signalName);
+				BlockPos pos = new BlockPos(x, y, z);
+
+				String msg = "(" + x + ", " + y + ", " + z + ") Frequency: " + frequency + ", Signal: " + signal.name();
+				player.addChatMessage(new ChatComponentText(msg));
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, signal));
+
+				player.getCurrentEquippedItem().setTagCompound(nbt);
+
+			}
+
+		} else if (player.isSneaking()) {
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSignal) {
@@ -56,12 +78,7 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 				player.addChatMessage(new ChatComponentText(msg));
 			}
 
-			return true;
-		}
-
-		if (!world.isRemote) {
-
-			// TODO: Check GUI
+		} else if (!world.isRemote) {
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSignal) {
@@ -76,6 +93,7 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 			}
 
 		}
+
 		return true;
 
 	}

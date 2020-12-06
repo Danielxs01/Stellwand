@@ -15,7 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TEBlockSender extends TileEntity {
 
 	// Client data
-	private static final int TARGETTICK = 20;
+	private static final int TARGETTICK = 10;
 	private int currentTick = 0;
 	private boolean initialTick = true;
 	private boolean initialUpdate = true;

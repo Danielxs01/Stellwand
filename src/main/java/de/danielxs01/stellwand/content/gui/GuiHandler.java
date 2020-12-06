@@ -18,6 +18,8 @@ public class GuiHandler implements IGuiHandler {
 			return new GuiBlockSignal(player, new BlockPos(x, y, z));
 		} else if (id == GuiBlockSender.GUIID) {
 			return new GuiBlockSender(player, new BlockPos(x, y, z));
+		} else if (id == GuiToolData.GUIID) {
+			return new GuiToolData(player);
 		}
 		return null;
 	}

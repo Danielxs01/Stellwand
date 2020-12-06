@@ -12,6 +12,8 @@ import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagDL;
 import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagDR;
 import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagUL;
 import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagUR;
+import de.danielxs01.stellwand.content.blocks.trackMainSignal.BlockTrackMainSignalLeft;
+import de.danielxs01.stellwand.content.blocks.trackMainSignal.BlockTrackMainSignalRight;
 import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmpty;
 import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmptyColored;
 import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmptyUnisolated;
@@ -48,6 +50,9 @@ public class CustomBlocks {
 		blocks.put("blockTrackSwitchLRU", new BlockTrackSwitchLRU());
 		blocks.put("blockTrackSwitchRLD", new BlockTrackSwitchRLD());
 		blocks.put("blockTrackSwitchRLU", new BlockTrackSwitchRLU());
+
+		blocks.put("blockTrackMainSignalLeft", new BlockTrackMainSignalLeft());
+		blocks.put("blockTrackMainSignalRight", new BlockTrackMainSignalRight());
 
 		for (Entry<String, Block> entry : blocks.entrySet())
 			setName(entry.getValue(), entry.getKey());
