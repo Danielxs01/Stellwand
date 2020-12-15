@@ -16,6 +16,8 @@ public class TEBlockSender extends TileEntity {
 
 	// Client data
 	private static final int TARGETTICK = 10;
+	private static final int CASUALUPDATETICK = 20;
+	private static final int MAXTICK = 20;
 	private int currentTick = 0;
 	private boolean initialTick = true;
 	private boolean initialUpdate = true;
@@ -106,7 +108,6 @@ public class TEBlockSender extends TileEntity {
 
 		currentTick++;
 		if (currentTick >= TARGETTICK) {
-			currentTick = 0;
 
 			boolean currentlyPowered = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
 
@@ -115,6 +116,18 @@ public class TEBlockSender extends TileEntity {
 				update();
 			}
 
+		}
+
+		// Sollte Sender die auf Grund von Distanz ausgeschaltet wurden wieder
+		// aktivieren.
+		if (currentTick >= CASUALUPDATETICK) {
+			boolean currentlyPowered = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+			this.isPowered = currentlyPowered;
+			update();
+		}
+
+		if (currentTick >= MAXTICK) {
+			currentTick = 0;
 		}
 
 	}
