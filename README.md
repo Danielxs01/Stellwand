@@ -9,7 +9,7 @@ There are multiple signals which have diffrent priorities
 
 ## Usage
 
-<img src="media/sender.png" style="float: right;" alt="Sender" width="100"/>
+<img src="media/sender.png" align="right" alt="Sender" width="100"/>
 <br>
 Define a frequency and set the wanted signal.<br>
 To activate the sender you have to give it a redstone signal.
@@ -18,6 +18,6 @@ To activate the sender you have to give it a redstone signal.
 <br>
 <br>
 
-<img src="media/signal.png" style="float: right;" alt="Signal" width="100">
+<img src="media/signal.png" align="right" alt="Signal" width="100">
 <br>
 Set the frequency and you are good to go.
