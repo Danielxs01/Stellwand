@@ -1,6 +1,0 @@
-Fixes:
-- Fix for Issue #8 (""Workers tool" verliert seine Informationen nach dem Anklicken eines Blockes")
-- Fix for Issue #9 ("Sender gehen ab einer gewissen Distanz aus, aber nicht mehr an")
-
-Functions:
-- Changing Blockinformation now only works by clicking with hand or with Workers tool
