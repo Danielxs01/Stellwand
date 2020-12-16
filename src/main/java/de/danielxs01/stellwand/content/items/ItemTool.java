@@ -14,8 +14,11 @@ import net.minecraft.world.World;
 @SuppressWarnings({ "java:S3740", "java:S1192" })
 public class ItemTool extends Item {
 
+	private static ItemTool instance;
+
 	public ItemTool() {
-		setMaxStackSize(1);
+		if (instance == null)
+			instance = this;
 	}
 
 	// Client
@@ -23,8 +26,10 @@ public class ItemTool extends Item {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List par3List, boolean par4) {
 
-		NBTTagCompound nbt = getNBT(stack);
-
+		if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("frequency")
+				|| !stack.getTagCompound().hasKey("signal"))
+			return;
+		NBTTagCompound nbt = stack.getTagCompound();
 		par3List.add("Frequency: " + nbt.getInteger("frequency"));
 		par3List.add("Signal: " + nbt.getString("signal"));
 	}
@@ -36,26 +41,44 @@ public class ItemTool extends Item {
 		if (!world.isRemote)
 			return stack;
 
-		double x = player.posX, y = player.posY, z = player.posZ;
+		double x = player.posX;
+		double y = player.posY;
+		double z = player.posZ;
 		player.openGui(Constants.MODID, GuiToolData.GUIID, world, (int) x, (int) y, (int) z);
 
 		return stack;
 	}
 
-	public static NBTTagCompound getNBT(ItemStack stack) {
-		NBTTagCompound nbt;
+	@Override
+	public boolean getShareTag() {
+		return true;
+	}
 
-		if (stack.hasTagCompound())
-			nbt = stack.getTagCompound();
-		else
-			nbt = new NBTTagCompound();
+	@Override
+	public boolean isItemTool(ItemStack stack) {
+		return stack.getItem() instanceof ItemTool;
+	}
 
-		if (!nbt.hasKey("frequency"))
-			nbt.setInteger("frequency", 0);
-		if (!nbt.hasKey("signal"))
-			nbt.setString("signal", EStellwandSignal.OFF.name());
+	public static NBTTagCompound getPreparedNBT(ItemStack itemTool, boolean override) {
+		if (itemTool.getItem() instanceof ItemTool) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			if (itemTool.hasTagCompound())
+				nbt = itemTool.getTagCompound();
+			if (!nbt.hasKey("frequency"))
+				nbt.setInteger("frequency", 0);
+			if (!nbt.hasKey("signal"))
+				nbt.setString("signal", EStellwandSignal.OFF.name());
+			if (override)
+				itemTool.setTagCompound(nbt);
+			return nbt;
+		}
+		return null;
+	}
 
-		return nbt;
+	public static ItemStack getItemStack(NBTTagCompound nbt) {
+		ItemStack is = new ItemStack(instance);
+		is.setTagCompound(nbt);
+		return is;
 	}
 
 }

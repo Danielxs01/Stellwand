@@ -5,6 +5,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import de.danielxs01.stellwand.Constants;
+import de.danielxs01.stellwand.network.bidirectional.RequestToolDataChange;
 import de.danielxs01.stellwand.network.client.AbstractClientMessageHandler;
 import de.danielxs01.stellwand.network.client.OpenGUI;
 import de.danielxs01.stellwand.network.client.ResponseTEStorageChange;
@@ -33,6 +34,10 @@ public class PacketDispatcher {
 		// Client
 		registerMessage(OpenGUI.Handler.class, OpenGUI.class, Side.CLIENT);
 		registerMessage(ResponseTEStorageChange.Handler.class, ResponseTEStorageChange.class);
+
+		// Bidirectional
+		registerMessage(RequestToolDataChange.ServerHandler.class, RequestToolDataChange.class, Side.SERVER);
+		registerMessage(RequestToolDataChange.ClientHandler.class, RequestToolDataChange.class, Side.CLIENT);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

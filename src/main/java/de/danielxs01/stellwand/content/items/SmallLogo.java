@@ -10,8 +10,8 @@ public class SmallLogo extends Item {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		par3List.add("Useless item :D");
+	public void addInformation(ItemStack stack, EntityPlayer player, List lore, boolean par4) {
+		lore.add("Useless Item :D");
 	}
 
 }

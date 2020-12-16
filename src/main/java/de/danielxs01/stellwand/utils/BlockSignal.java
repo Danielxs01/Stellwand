@@ -52,7 +52,7 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 
 			if (world.isRemote) {
 
-				NBTTagCompound nbt = ItemTool.getNBT(player.getCurrentEquippedItem());
+				NBTTagCompound nbt = ItemTool.getPreparedNBT(player.getCurrentEquippedItem(), true);
 
 				int frequency = nbt.getInteger("frequency");
 				String signalName = nbt.getString("signal");
@@ -63,22 +63,25 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 				player.addChatMessage(new ChatComponentText(msg));
 				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, signal));
 
-				player.getCurrentEquippedItem().setTagCompound(nbt);
-
 			}
 
-		} else if (player.isSneaking()) {
+			return true;
+
+		} else if (player.isSneaking() && player.getCurrentEquippedItem() == null) {
+
+			if (!world.isRemote)
+				return true;
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSignal) {
 				TEBlockSignal blockSignal = (TEBlockSignal) te;
 				int frequency = blockSignal.getFrequency();
 				EStellwandSignal signal = blockSignal.getSignal();
-				String msg = "Frequency: " + frequency + "; Signal: " + signal.name() + "; Client: " + world.isRemote;
+				String msg = "Frequency: " + frequency + "; Signal: " + signal.name();
 				player.addChatMessage(new ChatComponentText(msg));
 			}
 
-		} else if (!world.isRemote) {
+		} else if (!world.isRemote && player.getCurrentEquippedItem() == null) {
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSignal) {
@@ -94,7 +97,7 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 
 		}
 
-		return true;
+		return false;
 
 	}
 

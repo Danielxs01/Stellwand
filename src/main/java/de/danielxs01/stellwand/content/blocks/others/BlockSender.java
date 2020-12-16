@@ -7,6 +7,7 @@ import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.network.PacketDispatcher;
 import de.danielxs01.stellwand.network.client.OpenGUI;
 import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
+import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.BlockTileEntity;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
@@ -63,7 +64,7 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 
 			if (world.isRemote) {
 
-				NBTTagCompound nbt = ItemTool.getNBT(player.getCurrentEquippedItem());
+				NBTTagCompound nbt = ItemTool.getPreparedNBT(player.getCurrentEquippedItem(), true);
 				int frequency = nbt.getInteger("frequency");
 				String signalName = nbt.getString("signal");
 				EStellwandSignal signal = EStellwandSignal.valueOf(signalName);
@@ -73,24 +74,27 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 				player.addChatMessage(new ChatComponentText(msg));
 				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, signal));
 
-				player.getCurrentEquippedItem().setTagCompound(nbt);
-
 			}
 
-		} else if (player.isSneaking()) {
+			return true;
+
+		} else if (player.isSneaking() && player.getCurrentEquippedItem() == null) {
+
+			if (!world.isRemote)
+				return true;
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSender) {
 				TEBlockSender blockSender = (TEBlockSender) te;
 				int frequency = blockSender.getFrequency();
 				EStellwandSignal signal = blockSender.getSignal();
-				String msg = "Frequency: " + frequency + "; Signal: " + signal.name() + "; Client: " + world.isRemote;
+				String msg = "Frequency: " + frequency + "; Signal: " + signal.name();
 				player.addChatMessage(new ChatComponentText(msg));
+
+				return true;
 			}
 
-		} else if (!world.isRemote) {
-
-			// TODO: Check GUI
+		} else if (!world.isRemote && player.getCurrentEquippedItem() == null) {
 
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSender) {
@@ -104,9 +108,10 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, signal), (EntityPlayerMP) player);
 			}
 
+			return true;
 		}
 
-		return true;
+		return false;
 
 	}
 
@@ -126,7 +131,8 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 			TileEntity te = world.getTileEntity(x, y, z);
 			if (te instanceof TEBlockSender) {
 
-				// TODO: Zurücksetzen des Signals
+				TEBlockSender sender = (TEBlockSender) te;
+				ClientProxy.signalHandler.change(sender.getSenderID(), sender.getFrequency(), EStellwandSignal.OFF);
 
 			}
 		}

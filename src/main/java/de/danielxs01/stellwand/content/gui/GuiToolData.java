@@ -3,6 +3,8 @@ package de.danielxs01.stellwand.content.gui;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import de.danielxs01.stellwand.content.items.ItemTool;
+import de.danielxs01.stellwand.network.PacketDispatcher;
+import de.danielxs01.stellwand.network.bidirectional.RequestToolDataChange;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -34,7 +36,7 @@ public class GuiToolData extends GuiScreen {
 		this.player = player;
 
 		ItemStack stack = player.getCurrentEquippedItem();
-		NBTTagCompound nbt = ItemTool.getNBT(stack);
+		NBTTagCompound nbt = ItemTool.getPreparedNBT(stack, true);
 
 		this.frequency = nbt.getInteger("frequency");
 		this.signal = EStellwandSignal.valueOf(nbt.getString("signal"));
@@ -111,13 +113,7 @@ public class GuiToolData extends GuiScreen {
 				frequency = Integer.parseInt(frequencyText.getText());
 				signal = EStellwandSignal.valueOf(signalButton.displayString);
 
-				ItemStack stack = player.getCurrentEquippedItem();
-				NBTTagCompound nbt = ItemTool.getNBT(stack);
-
-				nbt.setInteger("frequency", frequency);
-				nbt.setString("signal", signal.name());
-
-				stack.setTagCompound(nbt);
+				PacketDispatcher.sendToServer(new RequestToolDataChange(frequency, signal));
 
 				this.player.closeScreen();
 			}
