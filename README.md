@@ -8,7 +8,6 @@ Adds Signalblocks and Senders<br>
 There are multiple signals which have diffrent priorities
 
 ## Usage
-<hr>
 
 <img src="media/sender.png" style="float: right;" alt="Sender" width="100"/>
 <br>
