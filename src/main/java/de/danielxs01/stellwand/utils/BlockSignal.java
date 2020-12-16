@@ -106,4 +106,9 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 		return new ArrayList<>();
 	}
 
+	@Override
+	public void onBlockPreDestroy(World world, int x, int y, int z, int oldMetadata) {
+		world.setTileEntity(x, y, z, null);
+	}
+
 }
