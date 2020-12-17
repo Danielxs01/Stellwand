@@ -116,6 +116,13 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 	}
 
 	@Override
+	public void onBlockPreDestroy(World world, int x, int y, int z, int p_149725_5_) {
+
+		onBlockDestroyed(world, x, y, z);
+
+	}
+
+	@Override
 	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta) {
 		this.onBlockDestroyed(world, x, y, z);
 	}
@@ -136,6 +143,7 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 
 			}
 		}
+		world.setTileEntity(x, y, z, null);
 
 	}
 
