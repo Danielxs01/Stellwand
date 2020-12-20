@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.gui;
+package de.danielxs01.stellwand.content.gui.stellwand;
 
 import org.apache.commons.lang3.math.NumberUtils;
 

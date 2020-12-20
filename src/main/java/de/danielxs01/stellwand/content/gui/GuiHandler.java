@@ -1,6 +1,9 @@
 package de.danielxs01.stellwand.content.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiBlockSender;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiBlockSignal;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiToolData;
 import de.danielxs01.stellwand.utils.BlockPos;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

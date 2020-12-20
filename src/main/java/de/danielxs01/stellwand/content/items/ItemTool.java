@@ -3,7 +3,7 @@ package de.danielxs01.stellwand.content.items;
 import java.util.List;
 
 import de.danielxs01.stellwand.Constants;
-import de.danielxs01.stellwand.content.gui.GuiToolData;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiToolData;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

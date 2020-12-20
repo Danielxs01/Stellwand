@@ -1,22 +1,22 @@
-package de.danielxs01.stellwand.content.gui;
+package de.danielxs01.stellwand.content.gui.stellwand;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import de.danielxs01.stellwand.content.items.ItemTool;
+import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.network.PacketDispatcher;
-import de.danielxs01.stellwand.network.bidirectional.RequestToolDataChange;
+import de.danielxs01.stellwand.network.server.RequestTEStorageChange;
+import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
-public class GuiToolData extends GuiScreen {
+public class GuiBlockSender extends GuiScreen {
 
 	// Gui ID
-	public static final int GUIID = 3;
+	public static final int GUIID = 1;
 
 	// Gui Elements
 	private GuiTextField frequencyText;
@@ -25,22 +25,24 @@ public class GuiToolData extends GuiScreen {
 
 	// Gui Variables
 	private EntityPlayer player;
+	private BlockPos blockPos;
 	private int frequency;
 	private EStellwandSignal signal;
 
-	public GuiToolData() {
+	public GuiBlockSender() {
 
 	}
 
-	public GuiToolData(EntityPlayer player) {
+	public GuiBlockSender(EntityPlayer player, BlockPos blockPos) {
 		this.player = player;
+		this.blockPos = blockPos;
 
-		ItemStack stack = player.getCurrentEquippedItem();
-		NBTTagCompound nbt = ItemTool.getPreparedNBT(stack, true);
-
-		this.frequency = nbt.getInteger("frequency");
-		this.signal = EStellwandSignal.valueOf(nbt.getString("signal"));
-
+		TileEntity te = player.worldObj.getTileEntity(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+		if (te instanceof TEBlockSender) {
+			TEBlockSender sender = (TEBlockSender) te;
+			this.frequency = sender.getFrequency();
+			this.signal = sender.getSignal();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -113,7 +115,7 @@ public class GuiToolData extends GuiScreen {
 				frequency = Integer.parseInt(frequencyText.getText());
 				signal = EStellwandSignal.valueOf(signalButton.displayString);
 
-				PacketDispatcher.sendToServer(new RequestToolDataChange(frequency, signal));
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, signal));
 
 				this.player.closeScreen();
 			}

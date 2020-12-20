@@ -2,7 +2,7 @@ package de.danielxs01.stellwand.utils;
 
 import java.util.ArrayList;
 
-import de.danielxs01.stellwand.content.gui.GuiBlockSignal;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiBlockSignal;
 import de.danielxs01.stellwand.content.items.ItemTool;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
 import de.danielxs01.stellwand.network.PacketDispatcher;

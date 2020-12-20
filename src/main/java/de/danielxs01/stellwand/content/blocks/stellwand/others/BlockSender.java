@@ -1,7 +1,7 @@
 package de.danielxs01.stellwand.content.blocks.stellwand.others;
 
 import de.danielxs01.stellwand.Constants;
-import de.danielxs01.stellwand.content.gui.GuiBlockSender;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiBlockSender;
 import de.danielxs01.stellwand.content.items.ItemTool;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.network.PacketDispatcher;
