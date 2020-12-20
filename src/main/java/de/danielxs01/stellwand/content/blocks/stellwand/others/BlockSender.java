@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.others;
+package de.danielxs01.stellwand.content.blocks.stellwand.others;
 
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.content.gui.GuiBlockSender;

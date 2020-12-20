@@ -74,6 +74,10 @@ public class TEBlockSignal extends TileEntity {
 		return signal;
 	}
 
+	public String getName() {
+		return "Stellwerks name?";
+	}
+
 	@Override
 	public boolean canUpdate() {
 		return true;

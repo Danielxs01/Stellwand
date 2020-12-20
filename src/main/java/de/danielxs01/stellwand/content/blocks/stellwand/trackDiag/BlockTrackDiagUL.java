@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.trackDiag;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackDiag;
 
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
@@ -12,14 +12,14 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockTrackDiagUR extends BlockSignal {
+public class BlockTrackDiagUL extends BlockSignal {
 
 	private IIcon displayOff = null;
 	private IIcon displayWhite = null;
 	private IIcon displayRed = null;
 	private IIcon side = null;
 
-	public static final String TYPE = "ur";
+	public static final String TYPE = "ul";
 	public static final String PATH = Constants.MODID + ":trackDiag/block_track_diag_" + TYPE + "_";
 	public static final String DISPLAYOFFTEXTURE = PATH + "dark";
 	public static final String DISPLAYWHITETEXTURE = PATH + "white";

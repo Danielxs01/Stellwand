@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.trackSwitch;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch;
 
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
@@ -104,9 +104,14 @@ public class BlockTrackSwitch extends BlockSignal {
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
+
+		if (side == -1 && meta == -1)
+			return this.displayDoubleRed;
+
 		EFacing f = EFacing.fromMeta(meta);
 		if (side == f.getSide())
 			return this.displayOff;
+
 		return this.side;
 	}
 

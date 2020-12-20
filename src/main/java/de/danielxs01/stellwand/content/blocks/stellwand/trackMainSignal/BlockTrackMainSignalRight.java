@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.trackMainSignal;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackMainSignal;
 
 public class BlockTrackMainSignalRight extends BlockTrackMainSignal {
 

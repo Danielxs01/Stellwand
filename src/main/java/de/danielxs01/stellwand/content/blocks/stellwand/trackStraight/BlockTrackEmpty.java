@@ -1,9 +1,9 @@
-package de.danielxs01.stellwand.content.blocks.trackDiag;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackStraight;
 
 import de.danielxs01.stellwand.Constants;
-import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
-import de.danielxs01.stellwand.utils.BlockSignal;
 import de.danielxs01.stellwand.utils.EFacing;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -12,25 +12,22 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockTrackDiagDR extends BlockSignal {
+public class BlockTrackEmpty extends Block {
 
-	private IIcon displayOff = null;
-	private IIcon displayWhite = null;
-	private IIcon displayRed = null;
+	private IIcon display = null;
 	private IIcon side = null;
 
-	public static final String TYPE = "dr";
-	public static final String PATH = Constants.MODID + ":trackDiag/block_track_diag_" + TYPE + "_";
-	public static final String DISPLAYOFFTEXTURE = PATH + "dark";
-	public static final String DISPLAYWHITETEXTURE = PATH + "white";
-	public static final String DISPLAYREDTEXTURE = PATH + "red";
-	public static final String STANDARDTEXTURE = Constants.MODID + ":others/filler";
+	public static final String PATH = Constants.MODID + ":";
+	public static final String DISPLAYTEXTURE = PATH + "trackStraight/block_track_empty";
+	public static final String STANDARDTEXTURE = PATH + "others/filler";
+
+	public BlockTrackEmpty() {
+		super(Material.rock);
+	}
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		displayOff = reg.registerIcon(DISPLAYOFFTEXTURE);
-		displayWhite = reg.registerIcon(DISPLAYWHITETEXTURE);
-		displayRed = reg.registerIcon(DISPLAYREDTEXTURE);
+		display = reg.registerIcon(DISPLAYTEXTURE);
 		side = reg.registerIcon(STANDARDTEXTURE);
 
 	}
@@ -41,25 +38,7 @@ public class BlockTrackDiagDR extends BlockSignal {
 		int meta = access.getBlockMetadata(x, y, z);
 		EFacing f = EFacing.fromMeta(meta).getOpposite();
 		if (side == f.getSide()) {
-			TEBlockSignal signal = getBlockSignal(access, x, y, z);
-			if (signal != null) {
-
-				// @formatter:off
-				switch(signal.getSignal()) {
-					case SINGLE_WHITE:
-					case DOUBLE_WHITE:
-						return displayWhite;
-					case SINGLE_RED:
-					case DOUBLE_RED:
-						return displayRed;
-					default:
-						return displayOff;
-				}
-				// @formatter:on
-
-			}
-			return displayOff;
-
+			return this.display;
 		}
 		return this.side;
 
@@ -69,7 +48,7 @@ public class BlockTrackDiagDR extends BlockSignal {
 	public IIcon getIcon(int side, int meta) {
 		EFacing f = EFacing.fromMeta(meta);
 		if (side == f.getSide())
-			return this.displayOff;
+			return this.display;
 		return this.side;
 	}
 

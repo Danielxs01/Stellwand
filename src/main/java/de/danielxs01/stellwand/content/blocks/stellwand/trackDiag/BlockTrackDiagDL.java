@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.trackMainSignal;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackDiag;
 
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
@@ -12,47 +12,26 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockTrackMainSignal extends BlockSignal {
+public class BlockTrackDiagDL extends BlockSignal {
 
 	private IIcon displayOff = null;
+	private IIcon displayWhite = null;
+	private IIcon displayRed = null;
 	private IIcon side = null;
 
-	private IIcon displaySingleGreen = null;
-	private IIcon displaySingleOrange = null;
-	private IIcon displaySingleRed = null;
-
-	// @formatter:off
-	public final String path;
-	public final String standardtexture;
-	public final String displayofftexture;
-
-	public final String displaySingleGreenTexture;
-	public final String displaySingleOrangeTexture;
-	public final String displaySingleRedTexture;
-	// @formatter:on
-
-	// LRD, RLD, RLU, LRU
-	public BlockTrackMainSignal(String side) {
-		super();
-
-		path = Constants.MODID + ":trackMainSignal/block_HSig_" + side + "_";
-		standardtexture = Constants.MODID + ":others/filler";
-		displayofftexture = path + "dark";
-
-		displaySingleGreenTexture = path + "green";
-		displaySingleOrangeTexture = path + "orange";
-		displaySingleRedTexture = path + "red";
-
-	}
+	public static final String TYPE = "dl";
+	public static final String PATH = Constants.MODID + ":trackDiag/block_track_diag_" + TYPE + "_";
+	public static final String DISPLAYOFFTEXTURE = PATH + "dark";
+	public static final String DISPLAYWHITETEXTURE = PATH + "white";
+	public static final String DISPLAYREDTEXTURE = PATH + "red";
+	public static final String STANDARDTEXTURE = Constants.MODID + ":others/filler";
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
-		displayOff = reg.registerIcon(displayofftexture);
-		side = reg.registerIcon(standardtexture);
-
-		displaySingleGreen = reg.registerIcon(displaySingleGreenTexture);
-		displaySingleOrange = reg.registerIcon(displaySingleOrangeTexture);
-		displaySingleRed = reg.registerIcon(displaySingleRedTexture);
+		displayOff = reg.registerIcon(DISPLAYOFFTEXTURE);
+		displayWhite = reg.registerIcon(DISPLAYWHITETEXTURE);
+		displayRed = reg.registerIcon(DISPLAYREDTEXTURE);
+		side = reg.registerIcon(STANDARDTEXTURE);
 
 	}
 
@@ -67,12 +46,12 @@ public class BlockTrackMainSignal extends BlockSignal {
 
 				// @formatter:off
 				switch(signal.getSignal()) {
-					case SINGLE_GREEN:
-						return displaySingleGreen;
-					case SINGLE_ORANGE:
-						return displaySingleOrange;
+					case SINGLE_WHITE:
+					case DOUBLE_WHITE:
+						return displayWhite;
 					case SINGLE_RED:
-						return displaySingleRed;
+					case DOUBLE_RED:
+						return displayRed;
 					default:
 						return displayOff;
 				}

@@ -1,4 +1,4 @@
-package de.danielxs01.stellwand.content.blocks.trackStraight;
+package de.danielxs01.stellwand.content.blocks.stellwand.trackStraight;
 
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
