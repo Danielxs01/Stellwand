@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.Stellwand;
-import de.danielxs01.stellwand.content.tabs.CustomTabs;
 import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -22,13 +21,10 @@ import net.minecraft.world.World;
 
 public class BlockZwergsignal extends BlockContainer {
 
-	public static BlockZwergsignal instance;
-
 	protected BlockZwergsignal() {
 		super(Material.circuits);
 		setBlockTextureName(Constants.MODID + ":obj/ch_zwergsignal_head.obj");
 		setBlockName("zwergsignal");
-		setCreativeTab(CustomTabs.stellwandTab);
 		setBlockBounds(0.2f, 0f, 0.2f, 0.8f, 1f, 0.8f);
 		GameRegistry.registerBlock(this, ItemZwergsignal.class, "zwergsignal");
 
@@ -76,7 +72,6 @@ public class BlockZwergsignal extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public static void register() {
-		instance = new BlockZwergsignal();
 		GameRegistry.registerTileEntity(TEZwergsignal.class, Constants.MODID + "_TEZwergsignal");
 		if (Stellwand.commonProxy instanceof ClientProxy)
 			ClientRegistry.bindTileEntitySpecialRenderer(TEZwergsignal.class, new TESRZwergsignal());

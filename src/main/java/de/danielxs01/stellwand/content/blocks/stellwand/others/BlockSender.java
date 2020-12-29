@@ -68,11 +68,12 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 				int frequency = nbt.getInteger("frequency");
 				String signalName = nbt.getString("signal");
 				EStellwandSignal signal = EStellwandSignal.valueOf(signalName);
+				String name = nbt.hasKey("name") ? nbt.getString("name") : "";
 				BlockPos pos = new BlockPos(x, y, z);
 
 				String msg = "(" + x + ", " + y + ", " + z + ") Frequency: " + frequency + ", Signal: " + signal.name();
 				player.addChatMessage(new ChatComponentText(msg));
-				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, signal));
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, name, signal));
 
 			}
 
@@ -104,8 +105,9 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 				BlockPos pos = new BlockPos(x, y, z);
 				int frequency = blockSender.getFrequency();
 				EStellwandSignal signal = blockSender.getSignal();
+				String name = blockSender.getName();
 
-				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, signal), (EntityPlayerMP) player);
+				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, name, signal), (EntityPlayerMP) player);
 			}
 
 			return true;
@@ -139,7 +141,8 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 			if (te instanceof TEBlockSender) {
 
 				TEBlockSender sender = (TEBlockSender) te;
-				ClientProxy.signalHandler.change(sender.getSenderID(), sender.getFrequency(), EStellwandSignal.OFF);
+				ClientProxy.signalHandler.change(sender.getSenderID(), sender.getName(), sender.getFrequency(),
+						EStellwandSignal.OFF);
 
 			}
 		}

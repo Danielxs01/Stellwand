@@ -26,6 +26,7 @@ public class GuiBlockSignal extends GuiScreen {
 	private EntityPlayer player;
 	private BlockPos blockPos;
 	private int frequency;
+	private String name;
 
 	public GuiBlockSignal() {
 
@@ -39,6 +40,7 @@ public class GuiBlockSignal extends GuiScreen {
 		if (te instanceof TEBlockSignal) {
 			TEBlockSignal sender = (TEBlockSignal) te;
 			this.frequency = sender.getFrequency();
+			this.name = sender.getName();
 		}
 	}
 
@@ -100,11 +102,12 @@ public class GuiBlockSignal extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		if (isInt(text.getText())) {
 			frequency = Integer.parseInt(text.getText());
+			name = name + "";
 
 			Stellwand.logger.info("GuiBlockSignal | Frequency: {}", frequency);
 
 			// TODO: Update data for signal
-			PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, null));
+			PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, name, null));
 
 			this.player.closeScreen();
 		}

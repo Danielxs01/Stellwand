@@ -18,12 +18,13 @@ public class TEBlockSignal extends TileEntity {
 	private boolean initialTick = true;
 
 	private int frequency;
+	private String name;
 	private EStellwandSignal signal;
 
 	public TEBlockSignal() {
 		this.frequency = 0;
 		this.signal = EStellwandSignal.OFF;
-
+		this.name = "";
 	}
 
 	@Override
@@ -31,6 +32,7 @@ public class TEBlockSignal extends TileEntity {
 
 		compound.setInteger("frequency", frequency);
 		compound.setInteger("signalID", signal.getID());
+		compound.setString("name", name);
 
 		super.writeToNBT(compound);
 	}
@@ -40,6 +42,7 @@ public class TEBlockSignal extends TileEntity {
 
 		this.frequency = compound.getInteger("frequency");
 		this.signal = EStellwandSignal.fromID(compound.getInteger("signalID"));
+		this.name = compound.hasKey("name") ? compound.getString("name") : "";
 
 		super.readFromNBT(compound);
 	}
@@ -66,6 +69,15 @@ public class TEBlockSignal extends TileEntity {
 		markDirty();
 	}
 
+	public void setName(String name) {
+		this.name = name;
+
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, zCoord, xCoord, yCoord, zCoord);
+
+		markDirty();
+	}
+
 	public int getFrequency() {
 		return frequency;
 	}
@@ -75,7 +87,7 @@ public class TEBlockSignal extends TileEntity {
 	}
 
 	public String getName() {
-		return "Stellwerks name?";
+		return name;
 	}
 
 	@Override
@@ -99,7 +111,7 @@ public class TEBlockSignal extends TileEntity {
 		if (currentTick >= TARGETTICK) {
 			currentTick = 0;
 
-			EStellwandSignal s = ClientProxy.signalHandler.getHighestPrio(frequency);
+			EStellwandSignal s = ClientProxy.signalHandler.getHighestPrio(name, frequency);
 
 			if (s != this.signal) {
 				this.setSignal(s);

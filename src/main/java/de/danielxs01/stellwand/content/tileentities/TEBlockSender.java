@@ -24,6 +24,7 @@ public class TEBlockSender extends TileEntity {
 
 	// General data
 	private UUID senderID;
+	private String name;
 	private int frequency;
 	private EStellwandSignal signal;
 	private boolean isPowered = false;
@@ -31,13 +32,8 @@ public class TEBlockSender extends TileEntity {
 	public TEBlockSender() {
 		this.senderID = UUID.randomUUID();
 		this.frequency = 0;
+		this.name = "";
 		this.signal = EStellwandSignal.OFF;
-	}
-
-	public TEBlockSender(int frequency, EStellwandSignal signal, UUID senderID) {
-		this.frequency = frequency;
-		this.signal = signal;
-		this.senderID = senderID;
 	}
 
 	@Override
@@ -47,6 +43,7 @@ public class TEBlockSender extends TileEntity {
 		compound.setInteger("signalID", signal.getID());
 		compound.setLong("senderIDmsb", senderID.getMostSignificantBits());
 		compound.setLong("senderIDlsb", senderID.getLeastSignificantBits());
+		compound.setString("name", name);
 
 		super.writeToNBT(compound);
 	}
@@ -59,6 +56,7 @@ public class TEBlockSender extends TileEntity {
 		long msb = compound.getLong("senderIDmsb");
 		long lsb = compound.getLong("senderIDlsb");
 		this.senderID = new UUID(msb, lsb);
+		this.name = compound.hasKey("name") ? compound.getString("name") : "";
 
 		super.readFromNBT(compound);
 	}
@@ -74,6 +72,13 @@ public class TEBlockSender extends TileEntity {
 		markDirty();
 	}
 
+	public void setName(String name) {
+		this.name = name;
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		worldObj.markTileEntityChunkModified(xCoord, yCoord, zCoord, this);
+		markDirty();
+	}
+
 	public void setFrequency(int frequency) {
 		this.frequency = frequency;
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -83,6 +88,10 @@ public class TEBlockSender extends TileEntity {
 
 	public int getFrequency() {
 		return frequency;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public EStellwandSignal getSignal() {
@@ -135,7 +144,7 @@ public class TEBlockSender extends TileEntity {
 	public void update() {
 		initialUpdate = false;
 		EStellwandSignal s = isPowered ? signal : EStellwandSignal.OFF;
-		ClientProxy.signalHandler.change(senderID, frequency, s);
+		ClientProxy.signalHandler.change(senderID, name, frequency, s);
 	}
 
 	public boolean isInitialUpdate() {

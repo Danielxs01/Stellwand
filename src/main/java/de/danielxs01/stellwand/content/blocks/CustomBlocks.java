@@ -10,6 +10,7 @@ import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockFiller;
 import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockSender;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDL;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDR;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagEmpty;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUL;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUR;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackMainSignal.BlockTrackMainSignalLeft;
@@ -45,6 +46,7 @@ public class CustomBlocks {
 		blocks.put("blockTrackDiagDR", new BlockTrackDiagDR());
 		blocks.put("blockTrackDiagUL", new BlockTrackDiagUL());
 		blocks.put("blockTrackDiagUR", new BlockTrackDiagUR());
+		blocks.put("blockTrackDiagEmpty", new BlockTrackDiagEmpty());
 
 		blocks.put("blockTrackSwitchLRD", new BlockTrackSwitchLRD());
 		blocks.put("blockTrackSwitchLRU", new BlockTrackSwitchLRU());

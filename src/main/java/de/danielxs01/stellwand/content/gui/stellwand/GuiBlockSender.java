@@ -20,6 +20,7 @@ public class GuiBlockSender extends GuiScreen {
 
 	// Gui Elements
 	private GuiTextField frequencyText;
+	private GuiTextField nameText;
 	private GuiButton signalButton;
 	private GuiButton saveButton;
 
@@ -27,6 +28,7 @@ public class GuiBlockSender extends GuiScreen {
 	private EntityPlayer player;
 	private BlockPos blockPos;
 	private int frequency;
+	private String name;
 	private EStellwandSignal signal;
 
 	public GuiBlockSender() {
@@ -41,6 +43,7 @@ public class GuiBlockSender extends GuiScreen {
 		if (te instanceof TEBlockSender) {
 			TEBlockSender sender = (TEBlockSender) te;
 			this.frequency = sender.getFrequency();
+			this.name = sender.getName();
 			this.signal = sender.getSignal();
 		}
 	}
@@ -57,6 +60,11 @@ public class GuiBlockSender extends GuiScreen {
 		frequencyText.setMaxStringLength(24);
 		frequencyText.setText("" + frequency);
 		this.frequencyText.setFocused(true);
+
+		this.nameText = new GuiTextField(this.fontRendererObj, this.width / 2 - difference, this.height / 2 - 40,
+				textWidth, 20);
+		nameText.setMaxStringLength(24);
+		nameText.setText("" + name);
 
 		this.signalButton = new GuiButton(1, this.width / 2 - difference, this.height / 2 - 10, textWidth, 20,
 				signal.name());
@@ -77,6 +85,8 @@ public class GuiBlockSender extends GuiScreen {
 		super.keyTyped(par1, par2);
 		if (this.frequencyText.isFocused())
 			this.frequencyText.textboxKeyTyped(par1, par2);
+		else if (this.nameText.isFocused())
+			this.nameText.textboxKeyTyped(par1, par2);
 		else if ((par1 == 'E' || par1 == 'e'))
 			this.player.closeScreen();
 	}
@@ -90,6 +100,7 @@ public class GuiBlockSender extends GuiScreen {
 	public void updateScreen() {
 		super.updateScreen();
 		this.frequencyText.updateCursorCounter();
+		this.nameText.updateCursorCounter();
 	}
 
 	@Override
@@ -97,6 +108,7 @@ public class GuiBlockSender extends GuiScreen {
 		drawDefaultBackground();
 
 		frequencyText.drawTextBox();
+		nameText.drawTextBox();
 		signalButton.drawButton(mc, 0, 0);
 		saveButton.drawButton(mc, 0, 0);
 	}
@@ -105,6 +117,7 @@ public class GuiBlockSender extends GuiScreen {
 	protected void mouseClicked(int x, int y, int btn) {
 		super.mouseClicked(x, y, btn);
 		this.frequencyText.mouseClicked(x, y, btn);
+		this.nameText.mouseClicked(x, y, btn);
 	}
 
 	@Override
@@ -114,8 +127,9 @@ public class GuiBlockSender extends GuiScreen {
 			if (isInt(frequencyText.getText())) {
 				frequency = Integer.parseInt(frequencyText.getText());
 				signal = EStellwandSignal.valueOf(signalButton.displayString);
+				name = nameText.getText();
 
-				PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, signal));
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, name, signal));
 
 				this.player.closeScreen();
 			}
