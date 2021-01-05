@@ -9,9 +9,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.Constants;
 import de.danielxs01.stellwand.Stellwand;
+import de.danielxs01.stellwand.content.connection.TESRBlockSender;
 import de.danielxs01.stellwand.content.obj.ItemZwergsignal;
 import de.danielxs01.stellwand.content.obj.TESRZwergsignal;
 import de.danielxs01.stellwand.content.obj.TEZwergsignal;
+import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.proxy.server.CommonProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
@@ -31,8 +33,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		Stellwand.logger.info("preInit");
 		ClientRegistry.bindTileEntitySpecialRenderer(TEZwergsignal.class, new TESRZwergsignal());
-		// TODO: ClientRegistry.bindTileEntitySpecialRenderer(TEBlockSender.class, new
-		// TESRBlockSender());
+		ClientRegistry.bindTileEntitySpecialRenderer(TEBlockSender.class, new TESRBlockSender());
 
 		super.preInit(event);
 	}
