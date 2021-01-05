@@ -23,7 +23,7 @@ import net.minecraftforge.client.model.IModelCustom;
 
 public class ClientProxy extends CommonProxy {
 
-	public static int[] displayList = new int[1];
+	private static int[] displayList = new int[1];
 
 	public static ClientSignalHandler signalHandler = new ClientSignalHandler();
 
@@ -31,6 +31,8 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		Stellwand.logger.info("preInit");
 		ClientRegistry.bindTileEntitySpecialRenderer(TEZwergsignal.class, new TESRZwergsignal());
+		// TODO: ClientRegistry.bindTileEntitySpecialRenderer(TEBlockSender.class, new
+		// TESRBlockSender());
 
 		super.preInit(event);
 	}
@@ -42,8 +44,8 @@ public class ClientProxy extends CommonProxy {
 
 		final IModelCustom model = AdvancedModelLoader
 				.loadModel(new ResourceLocation(Constants.MODID, "obj/ch_zwergsignal_head.obj"));
-		displayList[0] = GLAllocation.generateDisplayLists(1);
-		GL11.glNewList(displayList[0], GL11.GL_COMPILE);
+		getDisplayList()[0] = GLAllocation.generateDisplayLists(1);
+		GL11.glNewList(getDisplayList()[0], GL11.GL_COMPILE);
 		model.renderAll();
 		GL11.glEndList();
 
@@ -62,6 +64,14 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public EntityPlayer getPlayerEntity(MessageContext ctx) {
 		return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
+	}
+
+	public static int[] getDisplayList() {
+		return displayList;
+	}
+
+	public static void setDisplayList(int[] displayList) {
+		ClientProxy.displayList = displayList;
 	}
 
 }

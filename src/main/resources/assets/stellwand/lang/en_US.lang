@@ -25,3 +25,6 @@ tile.blockTrackSwitchRLU.name=Switch track (Right => Left, Up)
 
 tile.blockTrackMainSignalLeft.name=Main Signal Track (Left)
 tile.blockTrackMainSignalRight.name=Main Signal Track (Right)
+
+tiile.blockZwergsignalLeft.name=Zwergsignal (Left)
+tiile.blockZwergsignalRight.name=Zwergsignal (Right)

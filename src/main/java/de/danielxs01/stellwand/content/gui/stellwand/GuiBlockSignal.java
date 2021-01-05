@@ -106,7 +106,6 @@ public class GuiBlockSignal extends GuiScreen {
 
 			Stellwand.logger.info("GuiBlockSignal | Frequency: {}", frequency);
 
-			// TODO: Update data for signal
 			PacketDispatcher.sendToServer(new RequestTEStorageChange(blockPos, frequency, name, null));
 
 			this.player.closeScreen();

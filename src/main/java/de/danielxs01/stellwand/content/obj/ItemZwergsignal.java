@@ -59,7 +59,7 @@ public class ItemZwergsignal extends ItemBlock {
 			GL11.glScalef(1.5F, 1.5F, 1.5F);
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-			GL11.glCallList(ClientProxy.displayList[0]);
+			GL11.glCallList(ClientProxy.getDisplayList()[0]);
 			GL11.glPopMatrix();
 		}
 

@@ -10,7 +10,6 @@ import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockFiller;
 import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockSender;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDL;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDR;
-import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagEmpty;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUL;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUR;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackMainSignal.BlockTrackMainSignalLeft;
@@ -22,6 +21,7 @@ import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSw
 import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchLRU;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchRLD;
 import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchRLU;
+import de.danielxs01.stellwand.content.blocks.stellwand.zwergsignal.BlockZwergsignal;
 import de.danielxs01.stellwand.content.tabs.CustomTabs;
 import net.minecraft.block.Block;
 
@@ -46,7 +46,7 @@ public class CustomBlocks {
 		blocks.put("blockTrackDiagDR", new BlockTrackDiagDR());
 		blocks.put("blockTrackDiagUL", new BlockTrackDiagUL());
 		blocks.put("blockTrackDiagUR", new BlockTrackDiagUR());
-		blocks.put("blockTrackDiagEmpty", new BlockTrackDiagEmpty());
+		// TODO: blocks.put("blockTrackDiagEmpty", new BlockTrackDiagEmpty());
 
 		blocks.put("blockTrackSwitchLRD", new BlockTrackSwitchLRD());
 		blocks.put("blockTrackSwitchLRU", new BlockTrackSwitchLRU());
@@ -55,6 +55,9 @@ public class CustomBlocks {
 
 		blocks.put("blockTrackMainSignalLeft", new BlockTrackMainSignalLeft());
 		blocks.put("blockTrackMainSignalRight", new BlockTrackMainSignalRight());
+
+		blocks.put("blockZwergsignalLeft", BlockZwergsignal.LEFT);
+		blocks.put("blockZwergsignalRight", BlockZwergsignal.RIGHT);
 
 		for (Entry<String, Block> entry : blocks.entrySet())
 			setName(entry.getValue(), entry.getKey());

@@ -2,12 +2,12 @@ package de.danielxs01.stellwand.network.server;
 
 import javax.annotation.Nullable;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
 import de.danielxs01.stellwand.network.PacketDispatcher;
-import de.danielxs01.stellwand.network.StringByteBufHelper;
 import de.danielxs01.stellwand.network.client.ResponseTEStorageChange;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
@@ -42,7 +42,7 @@ public class RequestTEStorageChange implements IMessage {
 		this.type = buf.readInt();
 		this.pos = BlockPos.fromBytes(buf);
 		this.frequency = buf.readInt();
-		this.name = StringByteBufHelper.readString(buf);
+		this.name = ByteBufUtils.readUTF8String(buf);
 		if (type == 2)
 			this.signal = EStellwandSignal.fromID(buf.readInt());
 	}
@@ -52,7 +52,7 @@ public class RequestTEStorageChange implements IMessage {
 		buf.writeInt(this.type);
 		pos.toBytes(buf);
 		buf.writeInt(this.frequency);
-		StringByteBufHelper.writeString(buf, this.name);
+		ByteBufUtils.writeUTF8String(buf, this.name);
 		if (this.type == 2)
 			buf.writeInt(signal.getID());
 	}

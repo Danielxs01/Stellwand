@@ -55,21 +55,25 @@ public class GuiBlockSender extends GuiScreen {
 		final int textWidth = 160;
 		final int difference = textWidth / 2 + 5;
 
-		this.frequencyText = new GuiTextField(this.fontRendererObj, this.width / 2 - difference, this.height / 2 - 40,
+		// Frequency
+		this.frequencyText = new GuiTextField(this.fontRendererObj, this.width / 2 - difference, this.height / 2 - 70,
 				textWidth, 20);
 		frequencyText.setMaxStringLength(24);
 		frequencyText.setText("" + frequency);
 		this.frequencyText.setFocused(true);
 
+		// Name
 		this.nameText = new GuiTextField(this.fontRendererObj, this.width / 2 - difference, this.height / 2 - 40,
 				textWidth, 20);
 		nameText.setMaxStringLength(24);
 		nameText.setText("" + name);
 
+		// Signal
 		this.signalButton = new GuiButton(1, this.width / 2 - difference, this.height / 2 - 10, textWidth, 20,
 				signal.name());
 		this.signalButton.enabled = true;
 
+		// Save
 		// ID, x, y, width, height, text
 		this.saveButton = new GuiButton(0, this.width / 2 + difference, this.height / 2 - 10, 60, 20, "Save");
 		this.saveButton.enabled = true;
@@ -107,9 +111,25 @@ public class GuiBlockSender extends GuiScreen {
 	public void drawScreen(int i, int j, float f) {
 		drawDefaultBackground();
 
+		final int textWidth = 160;
+		final int difference = textWidth / 2 + 5;
+
+		// Frequency
 		frequencyText.drawTextBox();
+		if (frequencyText.getText().length() == 0)
+			this.drawCenteredString(mc.fontRenderer, "Frequency", (this.width / 2 - difference) + 31,
+					this.height / 2 - 64, 0xFFAAAAAA);
+
+		// Name
 		nameText.drawTextBox();
+		if (nameText.getText().length() == 0)
+			this.drawCenteredString(mc.fontRenderer, "Name", (this.width / 2 - difference) + 16, this.height / 2 - 34,
+					0xFFAAAAAA);
+
+		// Signal
 		signalButton.drawButton(mc, 0, 0);
+
+		// Save
 		saveButton.drawButton(mc, 0, 0);
 	}
 

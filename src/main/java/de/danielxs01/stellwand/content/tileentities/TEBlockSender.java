@@ -2,15 +2,23 @@ package de.danielxs01.stellwand.content.tileentities;
 
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
+import org.lwjgl.opengl.GL11;
+
+import de.danielxs01.stellwand.Stellwand;
 import de.danielxs01.stellwand.network.PacketDispatcher;
 import de.danielxs01.stellwand.network.server.RequestTEStorage;
 import de.danielxs01.stellwand.proxy.client.ClientProxy;
 import de.danielxs01.stellwand.utils.BlockPos;
 import de.danielxs01.stellwand.utils.EStellwandSignal;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 
 public class TEBlockSender extends TileEntity {
 
@@ -156,10 +164,64 @@ public class TEBlockSender extends TileEntity {
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
-		NBTTagCompound tag = new NBTTagCompound();
-		this.writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+	public S35PacketUpdateTileEntity getDescriptionPacket() {
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		this.writeToNBT(nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 0, nbttagcompound);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
+		if (pkt == null) {
+			return;
+		}
+		readFromNBT(pkt.func_148857_g());
+		markDirty();
+	}
+
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return AxisAlignedBB.getBoundingBox(xCoord - 1d, yCoord - 1d, zCoord - 1d, xCoord + 1d, yCoord, zCoord + 1d);
+	}
+
+	@Override
+	public void func_145828_a(@Nullable CrashReportCategory report) {
+		if (report == null) {
+
+			if (worldObj.isRemote) {
+
+				// GL ENABLE
+				GL11.glDisable(GL11.GL_TEXTURE_2D);
+				GL11.glDisable(GL11.GL_ALPHA_TEST);
+				GL11.glDisable(GL11.GL_LIGHTING);
+				GL11.glDisable(GL11.GL_DEPTH_TEST);
+				//
+
+				GL11.glColor3f(1.0f, 1.0f, 1.0f);
+				GL11.glLineWidth(5);
+
+				Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
+
+				Tessellator.instance.addVertex(.5d, .5d, .5d);
+				Tessellator.instance.addVertex(2.5d, 2.5d, 2.5d);
+
+				Tessellator.instance.draw();
+
+				// GL DISABLE
+				GL11.glEnable(GL11.GL_DEPTH_TEST);
+				GL11.glEnable(GL11.GL_LIGHTING);
+				GL11.glEnable(GL11.GL_ALPHA_TEST);
+				GL11.glEnable(GL11.GL_TEXTURE_2D);
+				//
+
+				Stellwand.logger.info("DRAW");
+
+			}
+
+		} else {
+			super.func_145828_a(report);
+		}
 	}
 
 }

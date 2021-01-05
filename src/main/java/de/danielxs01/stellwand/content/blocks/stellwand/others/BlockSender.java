@@ -56,6 +56,7 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 	// Methods
 
 	// Called on: Client & Server
+	@SuppressWarnings("java:S3776")
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
 			float hitY, float hitZ) {
@@ -118,7 +119,7 @@ public class BlockSender extends BlockTileEntity<TEBlockSender> {
 	}
 
 	@Override
-	public void onBlockPreDestroy(World world, int x, int y, int z, int p_149725_5_) {
+	public void onBlockPreDestroy(World world, int x, int y, int z, int meta) {
 
 		onBlockDestroyed(world, x, y, z);
 
