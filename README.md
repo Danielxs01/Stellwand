@@ -3,6 +3,7 @@
 # Stellwand (MC 1.7.10)
 Author: [Danielxs01 aka. SeltixSub](https://github.com/Danielxs01)<br>
 Content: [Citarofahrer](https://github.com/Citarofahrer)<br>
+Items: [yvnglucas](https://github.com/yvnglucas)<br>
 For: <https://landofrails.net><br>
 
 Adds Signalblocks and Senders<br>
