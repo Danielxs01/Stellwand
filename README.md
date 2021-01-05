@@ -8,6 +8,12 @@ For: <https://landofrails.net><br>
 Adds Signalblocks and Senders<br>
 There are multiple signals which have diffrent priorities
 
+## INFORMATION
+
+Massive update planned.
+The frequency option will be removed in the next release.
+Connections can get lost.
+
 ## Usage
 
 <img src="media/sender.png" align="right" alt="Sender" width="100"/>
