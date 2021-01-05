@@ -52,14 +52,16 @@ public class RequestGUI implements IMessage {
 			if (te instanceof TEBlockSignal) {
 				TEBlockSignal blockSignal = (TEBlockSignal) te;
 				int frequency = blockSignal.getFrequency();
+				String name = blockSignal.getName();
 				EStellwandSignal signal = blockSignal.getSignal();
-				PacketDispatcher.sendTo(new OpenGUI(message.guiId, message.blockPos, frequency, signal),
+				PacketDispatcher.sendTo(new OpenGUI(message.guiId, message.blockPos, frequency, name, signal),
 						(EntityPlayerMP) player);
 			} else if (te instanceof TEBlockSender) {
 				TEBlockSender blockSender = (TEBlockSender) te;
 				int frequency = blockSender.getFrequency();
+				String name = blockSender.getName();
 				EStellwandSignal signal = blockSender.getSignal();
-				PacketDispatcher.sendTo(new OpenGUI(message.guiId, message.blockPos, frequency, signal),
+				PacketDispatcher.sendTo(new OpenGUI(message.guiId, message.blockPos, frequency, name, signal),
 						(EntityPlayerMP) player);
 			}
 

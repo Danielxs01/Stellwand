@@ -2,6 +2,7 @@ package de.danielxs01.stellwand.network.client;
 
 import javax.annotation.Nullable;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSender;
@@ -18,16 +19,18 @@ public class ResponseTEStorageChange implements IMessage {
 	private int type;
 	private BlockPos pos;
 	private int frequency;
+	private String name;
 	private EStellwandSignal signal;
 
 	public ResponseTEStorageChange() {
 
 	}
 
-	public ResponseTEStorageChange(BlockPos pos, int frequency, @Nullable EStellwandSignal signal) {
+	public ResponseTEStorageChange(BlockPos pos, int frequency, String name, @Nullable EStellwandSignal signal) {
 		this.pos = pos;
 		this.type = signal == null ? 1 : 2;
 		this.frequency = frequency;
+		this.name = name;
 		this.signal = signal;
 	}
 
@@ -36,6 +39,7 @@ public class ResponseTEStorageChange implements IMessage {
 		this.type = buf.readInt();
 		this.pos = BlockPos.fromBytes(buf);
 		this.frequency = buf.readInt();
+		this.name = ByteBufUtils.readUTF8String(buf);
 		if (type == 2)
 			this.signal = EStellwandSignal.fromID(buf.readInt());
 	}
@@ -45,6 +49,7 @@ public class ResponseTEStorageChange implements IMessage {
 		buf.writeInt(this.type);
 		pos.toBytes(buf);
 		buf.writeInt(this.frequency);
+		ByteBufUtils.writeUTF8String(buf, this.name);
 		if (this.type == 2)
 			buf.writeInt(signal.getID());
 	}
@@ -60,6 +65,7 @@ public class ResponseTEStorageChange implements IMessage {
 
 				TEBlockSender blockSender = (TEBlockSender) te;
 				blockSender.setFrequency(message.frequency);
+				blockSender.setName(message.name);
 				if (message.type == 2)
 					blockSender.setSignal(message.signal);
 				if (blockSender.isInitialUpdate())
@@ -67,6 +73,7 @@ public class ResponseTEStorageChange implements IMessage {
 			} else if (te instanceof TEBlockSignal) {
 				TEBlockSignal blockSignal = (TEBlockSignal) te;
 				blockSignal.setFrequency(message.frequency);
+				blockSignal.setName(message.name);
 				if (message.type == 2)
 					blockSignal.setSignal(message.signal);
 			}

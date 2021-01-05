@@ -2,7 +2,7 @@ package de.danielxs01.stellwand.utils;
 
 import java.util.ArrayList;
 
-import de.danielxs01.stellwand.content.gui.GuiBlockSignal;
+import de.danielxs01.stellwand.content.gui.stellwand.GuiBlockSignal;
 import de.danielxs01.stellwand.content.items.ItemTool;
 import de.danielxs01.stellwand.content.tileentities.TEBlockSignal;
 import de.danielxs01.stellwand.network.PacketDispatcher;
@@ -56,12 +56,13 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 
 				int frequency = nbt.getInteger("frequency");
 				String signalName = nbt.getString("signal");
+				String name = nbt.getString("name");
 				EStellwandSignal signal = EStellwandSignal.valueOf(signalName);
 				BlockPos pos = new BlockPos(x, y, z);
 
 				String msg = "(" + x + ", " + y + ", " + z + ") Frequency: " + frequency + ", Signal: " + signal.name();
 				player.addChatMessage(new ChatComponentText(msg));
-				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, signal));
+				PacketDispatcher.sendToServer(new RequestTEStorageChange(pos, frequency, name, signal));
 
 			}
 
@@ -91,8 +92,9 @@ public class BlockSignal extends BlockTileEntity<TEBlockSignal> {
 				BlockPos pos = new BlockPos(x, y, z);
 				int frequency = blockSignal.getFrequency();
 				EStellwandSignal signal = blockSignal.getSignal();
+				String name = blockSignal.getName();
 
-				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, signal), (EntityPlayerMP) player);
+				PacketDispatcher.sendTo(new OpenGUI(guiId, pos, frequency, name, signal), (EntityPlayerMP) player);
 			}
 
 		}

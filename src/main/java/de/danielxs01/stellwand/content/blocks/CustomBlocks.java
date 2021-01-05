@@ -6,21 +6,22 @@ import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.danielxs01.stellwand.Constants;
-import de.danielxs01.stellwand.content.blocks.others.BlockFiller;
-import de.danielxs01.stellwand.content.blocks.others.BlockSender;
-import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagDL;
-import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagDR;
-import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagUL;
-import de.danielxs01.stellwand.content.blocks.trackDiag.BlockTrackDiagUR;
-import de.danielxs01.stellwand.content.blocks.trackMainSignal.BlockTrackMainSignalLeft;
-import de.danielxs01.stellwand.content.blocks.trackMainSignal.BlockTrackMainSignalRight;
-import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmpty;
-import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmptyColored;
-import de.danielxs01.stellwand.content.blocks.trackStraight.BlockTrackEmptyUnisolated;
-import de.danielxs01.stellwand.content.blocks.trackSwitch.BlockTrackSwitchLRD;
-import de.danielxs01.stellwand.content.blocks.trackSwitch.BlockTrackSwitchLRU;
-import de.danielxs01.stellwand.content.blocks.trackSwitch.BlockTrackSwitchRLD;
-import de.danielxs01.stellwand.content.blocks.trackSwitch.BlockTrackSwitchRLU;
+import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockFiller;
+import de.danielxs01.stellwand.content.blocks.stellwand.others.BlockSender;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDL;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagDR;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUL;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackDiag.BlockTrackDiagUR;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackMainSignal.BlockTrackMainSignalLeft;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackMainSignal.BlockTrackMainSignalRight;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackStraight.BlockTrackEmpty;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackStraight.BlockTrackEmptyColored;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackStraight.BlockTrackEmptyUnisolated;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchLRD;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchLRU;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchRLD;
+import de.danielxs01.stellwand.content.blocks.stellwand.trackSwitch.BlockTrackSwitchRLU;
+import de.danielxs01.stellwand.content.blocks.stellwand.zwergsignal.BlockZwergsignal;
 import de.danielxs01.stellwand.content.tabs.CustomTabs;
 import net.minecraft.block.Block;
 
@@ -45,6 +46,7 @@ public class CustomBlocks {
 		blocks.put("blockTrackDiagDR", new BlockTrackDiagDR());
 		blocks.put("blockTrackDiagUL", new BlockTrackDiagUL());
 		blocks.put("blockTrackDiagUR", new BlockTrackDiagUR());
+		// TODO: blocks.put("blockTrackDiagEmpty", new BlockTrackDiagEmpty());
 
 		blocks.put("blockTrackSwitchLRD", new BlockTrackSwitchLRD());
 		blocks.put("blockTrackSwitchLRU", new BlockTrackSwitchLRU());
@@ -53,6 +55,9 @@ public class CustomBlocks {
 
 		blocks.put("blockTrackMainSignalLeft", new BlockTrackMainSignalLeft());
 		blocks.put("blockTrackMainSignalRight", new BlockTrackMainSignalRight());
+
+		blocks.put("blockZwergsignalLeft", BlockZwergsignal.LEFT);
+		blocks.put("blockZwergsignalRight", BlockZwergsignal.RIGHT);
 
 		for (Entry<String, Block> entry : blocks.entrySet())
 			setName(entry.getValue(), entry.getKey());

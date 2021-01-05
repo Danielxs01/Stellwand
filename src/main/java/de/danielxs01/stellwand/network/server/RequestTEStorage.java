@@ -48,13 +48,17 @@ public class RequestTEStorage implements IMessage {
 			if (te instanceof TEBlockSignal) {
 				TEBlockSignal blockSignal = (TEBlockSignal) te;
 				int frequency = blockSignal.getFrequency();
+				String name = blockSignal.getName();
 				EStellwandSignal signal = blockSignal.getSignal();
-				PacketDispatcher.sendTo(new ResponseTEStorageChange(pos, frequency, signal), (EntityPlayerMP) player);
+				PacketDispatcher.sendTo(new ResponseTEStorageChange(pos, frequency, name, signal),
+						(EntityPlayerMP) player);
 			} else if (te instanceof TEBlockSender) {
 				TEBlockSender blockSender = (TEBlockSender) te;
 				int frequency = blockSender.getFrequency();
+				String name = blockSender.getName();
 				EStellwandSignal signal = blockSender.getSignal();
-				PacketDispatcher.sendTo(new ResponseTEStorageChange(pos, frequency, signal), (EntityPlayerMP) player);
+				PacketDispatcher.sendTo(new ResponseTEStorageChange(pos, frequency, name, signal),
+						(EntityPlayerMP) player);
 			}
 
 			return null;

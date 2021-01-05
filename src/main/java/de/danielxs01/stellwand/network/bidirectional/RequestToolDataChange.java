@@ -49,6 +49,7 @@ public class RequestToolDataChange implements IMessage {
 		buf.writeInt(bytes.length);
 		for (byte b : bytes)
 			buf.writeByte(b);
+
 	}
 
 	public static class ServerHandler extends AbstractServerMessageHandler<RequestToolDataChange> {

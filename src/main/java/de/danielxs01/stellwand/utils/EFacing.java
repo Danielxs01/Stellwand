@@ -1,5 +1,7 @@
 package de.danielxs01.stellwand.utils;
 
+import net.minecraft.util.MathHelper;
+
 public enum EFacing {
 
 	NORTH(2, 2), EAST(3, 5), SOUTH(0, 3), WEST(1, 4);
@@ -49,6 +51,31 @@ public enum EFacing {
 		default:
 			return null;
 		}
+	}
+
+	public static int getDirectionTowards(float rotationYaw) {
+
+		int direction = MathHelper.floor_double((double) ((rotationYaw * 4F) / 360F) + 0.5D) & 3;
+
+		if (direction == 1 || direction == 3)
+			direction = direction == 1 ? 3 : 1;
+
+		return direction;
+	}
+
+	public static int getDirectionFacing(float rotationYaw) {
+		int direction = getDirectionTowards(rotationYaw);
+		direction = direction >= 2 ? direction - 2 : direction + 2;
+
+		return direction;
+	}
+
+	public static int getDiagonalFacing(float rotationYaw) {
+
+		int direction = MathHelper.floor_double((double) (rotationYaw * 4F) / 360F) & 3;
+		direction = direction >= 2 ? direction - 2 : direction + 2;
+		return direction;
+
 	}
 
 }
