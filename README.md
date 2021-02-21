@@ -12,8 +12,8 @@ There are multiple signals which have diffrent priorities
 ## INFORMATION
 
 Massive update planned.
-The frequency option will be removed in the next release.
-Connections can get lost.
+This project will be continued in LandOfSignals.
+https://github.com/LandOfRails/LandOfSignals
 
 ## Usage
 
